@@ -11,8 +11,16 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
-router.get('/', (req, res) => {
-    res.render('images');
+router.get('/', async(req, res) => {
+    const photos = await Photo.find();
+    res.render('images', {
+        photos,
+        helpers: {
+            imageURL: function(){
+                return this.imageURL
+            }
+        }
+    });
 });
 
 router.get('/images/add', (req, res) => {
