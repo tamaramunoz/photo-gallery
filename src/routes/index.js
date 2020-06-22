@@ -29,8 +29,8 @@ router.post('/images/add', async(req, res) => {
         public_id: result.public_id
     });
     await newPhoto.save();
-
-    res.send('Received')
+    await fs.unlink(req.file.path);
+    res.send('Received');
 });
 
 module.exports = router;
