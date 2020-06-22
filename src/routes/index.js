@@ -23,8 +23,24 @@ router.get('/', async(req, res) => {
     });
 });
 
-router.get('/images/add', (req, res) => {
-    res.render('image_form')
+router.get('/images/add', async(req, res) => {
+    const photos = await Photo.find();
+    res.render('image_form', 
+    {
+        photos,
+        helpers: {
+            imageURL: function(){
+                return this.imageURL
+            },
+            title: function(){
+                return this.title
+            },
+            description: function(){
+                return this.description
+            }
+        }
+    })
+
 });
 
 router.post('/images/add', async(req, res) => {
